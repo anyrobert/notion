@@ -10,7 +10,8 @@
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "postinstall": "patch-package"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.54",
@@ -19,7 +20,8 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "electron": "^12.0.1",
-    "electron-wix-msi": "^3.1.0"
+    "electron-wix-msi": "^3.1.0",
+    "patch-package": "^6.4.7"
   },
   "dependencies": {
     "custom-electron-titlebar": "^3.2.6",

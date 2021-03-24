@@ -1,0 +1,18 @@
+diff --git a/node_modules/custom-electron-titlebar/lib/titlebar.js b/node_modules/custom-electron-titlebar/lib/titlebar.js
+index 6483747..eb5b11f 100644
+--- a/node_modules/custom-electron-titlebar/lib/titlebar.js
++++ b/node_modules/custom-electron-titlebar/lib/titlebar.js
+@@ -134,6 +134,13 @@ class Titlebar extends themebar_1.Themebar {
+             this._register(dom_1.addDisposableListener(this.titlebar, dom_1.EventType.DBLCLICK, () => {
+                 isMaximized = !isMaximized;
+                 this.onDidChangeMaximized(isMaximized);
++                if (isMaximized){
++                    this.currentWindow.maximize()
++                } else {
++                    this.currentWindow.setSize(1000, 600, true)
++                    this.currentWindow.center()
++                }
++
+             }));
+         }
+         // Window Controls (Windows/Linux)
