@@ -29,7 +29,10 @@ webview {
   width: 95vw;
   overflow-y: auto;
 }
-
+::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
+}
 #titlebar {
   display: block;
   position: fixed;
