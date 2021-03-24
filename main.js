@@ -75,6 +75,7 @@ function createWindow() {
     height: 600,
     darkTheme: true,
     frame: false,
+    titleBarStyle: "hidden", // add this line
     webPreferences: {
       nodeIntegration: true,
       webviewTag: true,

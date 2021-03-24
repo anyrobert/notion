@@ -23,8 +23,9 @@ p {
 webview {
   display: block; /* iframes are inline by default */
   border: none; /* Reset default border */
-  height: calc(80vh - 32px); /* Viewport-relative units */
-  margin-top: 32px;
+  /* height: calc(80vh - 32px); */
+  /* margin-top: 32px; */
+  height: 80vh;
   width: 95vw;
   overflow-y: auto;
 }

@@ -1,8 +1,12 @@
 const remote = require("electron").remote;
+const customTitlebar = require("custom-electron-titlebar");
+
+new customTitlebar.Titlebar({
+  backgroundColor: customTitlebar.Color.fromHex("#2f3437"),
+});
 
 const win = remote.getCurrentWindow(); /* Note this is different to the
 html global `window` variable */
-console.log('rola')
 // When document has loaded, initialise
 document.onreadystatechange = (event) => {
   if (document.readyState == "complete") {
