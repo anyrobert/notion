@@ -2,11 +2,10 @@ const { app, BrowserWindow } = require("electron");
 
 if (require("electron-squirrel-startup")) return app.quit();
 
-// this should be placed at top of main.js to handle setup events quickly
 if (handleSquirrelEvent()) {
-  // squirrel event handled and app will exit in 1000ms, so don't do anything else
   return;
 }
+
 function handleSquirrelEvent() {
   if (process.argv.length === 1) {
     return false;
@@ -71,7 +70,7 @@ function handleSquirrelEvent() {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
+    width: 1000,
     height: 600,
     darkTheme: true,
     frame: false,
