@@ -1,6 +1,6 @@
 {
   "name": "notion",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "main.js",
   "license": "MIT",
   "author": {
@@ -40,8 +40,7 @@
             "exe": "Notion.exe",
             "title": "Notion Desktop",
             "setupIcon": "C:/Users/anyro/Documents/notion/icons/icon.ico",
-            "iconUrl": "C:/Users/anyro/Documents/notion/icons/icon.ico",
-            "loadingGif": "C:/Users/anyro/Documents/notion/icons/loading.gif"
+            "iconUrl": "C:/Users/anyro/Documents/notion/icons/icon.ico"
           }
         },
         {

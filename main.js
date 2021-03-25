@@ -27,6 +27,9 @@ function createWindow() {
 function handleOpenApp() {
   app.emit("activate");
   app.focus({ steal: true });
+  for (const win of BrowserWindow.getAllWindows()){
+    return win.focus()
+  }
 }
 
 function createTray() {
