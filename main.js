@@ -27,9 +27,13 @@ function createWindow() {
 function handleOpenApp() {
   app.emit("activate");
   app.focus({ steal: true });
-  for (const win of BrowserWindow.getAllWindows()){
-    return win.focus()
+  for (const win of BrowserWindow.getAllWindows()) {
+    return win.focus();
   }
+}
+
+function handleCloseApp() {
+  app.quit();
 }
 
 function createTray() {
@@ -38,18 +42,12 @@ function createTray() {
   );
   contextMenu = Menu.buildFromTemplate([
     { label: "Abrir", type: "normal", click: handleOpenApp },
+    { label: "Sair", type: "normal", click: handleCloseApp },
   ]);
   tray.setToolTip("Notion");
   tray.setContextMenu(contextMenu);
-  // updateTrayMenu();
 }
 
-// function updateTrayMenu() {
-//   console.log(webContents.getFocusedWebContents());
-//   const menuItem = new MenuItem({ label: "teste", type: "normal" });
-//   contextMenu.append(menuItem);
-//   tray.setContextMenu(contextMenu);
-// }
 
 app.whenReady().then(() => {
   createWindow();
@@ -61,11 +59,6 @@ app.whenReady().then(() => {
   });
 });
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
 
 if (handleSquirrelEvent()) {
   return;
