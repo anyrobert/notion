@@ -1,6 +1,68 @@
-const { app, BrowserWindow } = require("electron");
+const { app, Tray, Menu, nativeImage, BrowserWindow } = require("electron");
+const path = require("path");
 
 if (require("electron-squirrel-startup")) return app.quit();
+
+let tray;
+let contextMenu;
+
+function createWindow() {
+  const win = new BrowserWindow({
+    width: 1000,
+    height: 600,
+    darkTheme: true,
+    frame: false,
+    titleBarStyle: "hidden",
+    webPreferences: {
+      nodeIntegration: true,
+      webviewTag: true,
+      contextIsolation: false,
+      enableRemoteModule: true,
+    },
+    icon: "./icons/logo.png",
+  });
+  win.loadFile("index.html");
+}
+
+function handleOpenApp() {
+  app.emit("activate");
+  app.focus({ steal: true });
+}
+
+function createTray() {
+  tray = new Tray(
+    nativeImage.createFromPath(path.join(__dirname, "icons/icon.png"))
+  );
+  contextMenu = Menu.buildFromTemplate([
+    { label: "Abrir", type: "normal", click: handleOpenApp },
+  ]);
+  tray.setToolTip("Notion");
+  tray.setContextMenu(contextMenu);
+  // updateTrayMenu();
+}
+
+// function updateTrayMenu() {
+//   console.log(webContents.getFocusedWebContents());
+//   const menuItem = new MenuItem({ label: "teste", type: "normal" });
+//   contextMenu.append(menuItem);
+//   tray.setContextMenu(contextMenu);
+// }
+
+app.whenReady().then(() => {
+  createWindow();
+  createTray();
+  app.on("activate", () => {
+    if (BrowserWindow.getAllWindows().length === 0) {
+      createWindow();
+    }
+  });
+});
+
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
 
 if (handleSquirrelEvent()) {
   return;
@@ -20,7 +82,7 @@ function handleSquirrelEvent() {
   const exeName = path.basename(process.execPath);
 
   const spawn = function (command, args) {
-    let spawnedProcess, error;
+    let spawnedProcess;
 
     try {
       spawnedProcess = ChildProcess.spawn(command, args, { detached: true });
@@ -37,67 +99,19 @@ function handleSquirrelEvent() {
   switch (squirrelEvent) {
     case "--squirrel-install":
     case "--squirrel-updated":
-      // Optionally do things such as:
-      // - Add your .exe to the PATH
-      // - Write to the registry for things like file associations and
-      //   explorer context menus
-
-      // Install desktop and start menu shortcuts
       spawnUpdate(["--createShortcut", exeName]);
 
       setTimeout(app.quit, 1000);
       return true;
 
     case "--squirrel-uninstall":
-      // Undo anything you did in the --squirrel-install and
-      // --squirrel-updated handlers
-
-      // Remove desktop and start menu shortcuts
       spawnUpdate(["--removeShortcut", exeName]);
 
       setTimeout(app.quit, 1000);
       return true;
 
     case "--squirrel-obsolete":
-      // This is called on the outgoing version of your app before
-      // we update to the new version - it's the opposite of
-      // --squirrel-updated
-
       app.quit();
       return true;
   }
 }
-
-function createWindow() {
-  const win = new BrowserWindow({
-    width: 1000,
-    height: 600,
-    darkTheme: true,
-    frame: false,
-    titleBarStyle: "hidden", // add this line
-    webPreferences: {
-      nodeIntegration: true,
-      webviewTag: true,
-      contextIsolation: false,
-      enableRemoteModule: true,
-    },
-    icon: "./icons/logo.png",
-  });
-  win.loadFile("index.html");
-}
-
-app.whenReady().then(() => {
-  createWindow();
-
-  app.on("activate", () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
-
-app.on("window-all-closed", () => {
-  // if (process.platform !== "darwin") {
-    app.quit();
-  // }
-});
